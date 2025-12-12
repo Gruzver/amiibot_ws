@@ -1,0 +1,21 @@
+# Directorios de ROS 2 / colcon
+build/
+install/
+log/
+src/amiibot_description/models/*
+src/amiibot_description/photos/*
+
+# Excepción: Rastrear el archivo .gitkeep (esto fuerza a Git a mantener la carpeta)
+!src/amiibot_description/models/.gitkeep
+!src/amiibot_description/photos/.gitkeep
+
+# Archivos de caché
+.vscode/
+.cache/
+
+# Archivos temporales de Python
+*.pyc
+__pycache__/
+
+# Backups de editores
+*~

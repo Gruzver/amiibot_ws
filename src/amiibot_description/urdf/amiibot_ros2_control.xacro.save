@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot name="amiibot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+ 
+    <ros2_control name ="RobotSystem" type="system">
+      <hardware>
+        <!-- FOR SIMULATION, WITOUT REAL HARDWARE
+        <plugin>mock_components/GenericSystem</plugin>
+        <param name="calculate_dynamics">true</param>
+        -->
+        <plugin>roboclaw_hardware_interface/RoboClawHardwareInterface</plugin>
+          <param name="serial_port">/dev/ttyACM0</param>
+          <param name="serial_baud" type="int">115200</param>
+        
+      </hardware>
+      <joint name="left_wheel_joint">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <!--Los qppr-->
+        <param name="address">128</param>
+        <param name="motor_type">M2</param>
+        <param name="qppr">51200</param>
+        
+      </joint>
+      <joint name="right_wheel_joint">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        
+        <param name="address">128</param>
+        <param name="motor_type">M1</param>
+        <param name="qppr">51200</param>
+        
+      </joint>
+    </ros2_control>
+
+</robot>

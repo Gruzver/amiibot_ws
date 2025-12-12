@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<robot name="amiibot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<!--  
+    <xacro:include filename="amiibot_base.xacro"/>
+    <xacro:include filename="amiibot_ros2_control.xacro"/>
+    
+    <xacro:include filename="$(find amiibot_description)/urdf/amiibot_gazebo.xacro"/> 
+-->
+    <xacro:include filename="$(find amiibot_description)/urdf/amiibot_base.xacro"/>
+    <xacro:include filename="$(find amiibot_description)/urdf/amiibot_ros2_control.xacro"/>
+    
+</robot>
