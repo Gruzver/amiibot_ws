@@ -3,9 +3,7 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
-
 def generate_launch_description():
-
     controller_yaml = os.path.join(get_package_share_directory(
         'amiibot_navigation'), 'config', 'controller.yaml')
     default_bt_xml_path = os.path.join(get_package_share_directory(
@@ -19,12 +17,9 @@ def generate_launch_description():
     nav2_yaml = os.path.join(get_package_share_directory(
         'amiibot_navigation'), 'config', 'amcl_config.yaml')
     map_file = os.path.join(get_package_share_directory(
-        'amiibot_navigation'), 'maps', 'map_amii_space.yaml')
-    #rviz_config_file_path = os.path.join(get_package_share_directory(
-    #    'amiibot_navigation'), 'rviz_config', 'pathplanning.rviz')
+        'amiibot_navigation'), 'maps', 'k303.yaml')
     waypoint_follower_yaml = os.path.join(get_package_share_directory(
         'amiibot_navigation'), 'config', 'waypoint_follower.yaml')
-
 
     return LaunchDescription([
         Node(
@@ -47,49 +42,39 @@ def generate_launch_description():
             executable='controller_server',
             name='controller_server',
             output='screen',
-            parameters=[controller_yaml]),
-            remappings=[
-                ('/cmd_vel', '/botwheel_explorer/cmd_vel')
-            ]
-        )
-
+            parameters=[controller_yaml],
+            #remappings=[
+            #    ('/cmd_vel', '/botwheel_explorer/cmd_vel')
+            #]
+        ),
         Node(
             package='nav2_planner',
             executable='planner_server',
             name='planner_server',
             output='screen',
-            parameters=[planner_yaml]),
-
+            parameters=[planner_yaml]
+        ),
         Node(
             package='nav2_behaviors',
             executable='behavior_server',
             name='behavior_server',
             output='screen',
-            parameters=[recovery_yaml]),
-
+            parameters=[recovery_yaml]
+        ),
         Node(
             package='nav2_bt_navigator',
             executable='bt_navigator',
             name='bt_navigator',
             output='screen',
-            parameters=[bt_navigator_yaml, {'default_bt_xml_filename': default_bt_xml_path}]),
-
-        #Node(
-        #    package='rviz2',
-        #    executable='rviz2',
-        #    output='screen',
-        #    name='rviz2_node',
-        #    parameters=[{'use_sim_time': False}],
-        #    arguments=['-d', rviz_config_file_path]),
-
+            parameters=[bt_navigator_yaml, {'default_bt_xml_filename': default_bt_xml_path}]
+        ),
         Node(
             package='nav2_waypoint_follower',
             executable='waypoint_follower',
             name='waypoint_follower',
             output='screen',
-            parameters=[waypoint_follower_yaml]),
-        
-
+            parameters=[waypoint_follower_yaml]
+        ),
         Node(
             package='nav2_lifecycle_manager',
             executable='lifecycle_manager',
@@ -102,6 +87,6 @@ def generate_launch_description():
                                         'planner_server',
                                         'behavior_server',
                                         'bt_navigator',
-                                        'waypoint_follower']}])
-
+                                        'waypoint_follower']}]
+        )
     ])

@@ -1,7 +1,14 @@
-# Directorios de ROS 2 / colcon
+# ============================================================================
+# Directorios de ROS 2 / colcon (IMPORTANTE: ignorar en todas las máquinas)
+# ============================================================================
 build/
 install/
 log/
+.colcon/
+
+# ============================================================================
+# Modelos y fotos personalizadas (no necesitan versionarse)
+# ============================================================================
 src/amiibot_description/models/*
 src/amiibot_description/photos/*
 
@@ -9,13 +16,48 @@ src/amiibot_description/photos/*
 !src/amiibot_description/models/.gitkeep
 !src/amiibot_description/photos/.gitkeep
 
-# Archivos de caché
+# ============================================================================
+# Archivos de IDE / Editor (varían según máquina)
+# ============================================================================
 .vscode/
-.cache/
-
-# Archivos temporales de Python
-*.pyc
-__pycache__/
-
-# Backups de editores
+.idea/
+*.swp
+*.swo
 *~
+.DS_Store
+Thumbs.db
+
+# ============================================================================
+# Archivos de caché
+# ============================================================================
+.cache/
+.pytest_cache/
+*.cache
+
+# ============================================================================
+# Archivos temporales de Python
+# ============================================================================
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.egg-info/
+dist/
+build_temp/
+
+# ============================================================================
+# Archivos de configuración local (específicos de cada máquina)
+# ============================================================================
+.env
+.env.local
+*.local
+
+# ============================================================================
+# Outputs de compilación específicos de arquitectura
+# ============================================================================
+# Estos se regeneran en cada máquina (Jetson vs Laptop)
+CMakeFiles/
+cmake_install.cmake
+*.so
+*.a
+*.o

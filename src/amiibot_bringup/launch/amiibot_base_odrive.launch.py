@@ -11,36 +11,11 @@ from launch_ros.substitutions import FindPackageShare
 def generate_launch_description():
     # Declare arguments
     declared_arguments = []
-#    declared_arguments.append(
-#        DeclareLaunchArgument(
-#            "gui",
-#            default_value="true",
-#            description="Start RViz2 automatically with this launch file.",
-#        )
-#    )
-#    declared_arguments.append(
-#        DeclareLaunchArgument(
-#            "use_mock_hardware",
-#            default_value="false",
-#            description="Start robot with mock hardware mirroring command to its states.",
-#        )
-#    )
-
-    # Initialize Arguments
-#    gui = LaunchConfiguration("gui")
-#    use_mock_hardware = LaunchConfiguration("use_mock_hardware")
-
+    
     # Get URDF via xacro
     robot_description_content = Command(
-        [
-            PathJoinSubstitution([FindExecutable(name="xacro")]),
-            " ",
-            PathJoinSubstitution(
-                [FindPackageShare("amiibot_description"), "urdf", "amiibot.urdf.xacro"]
-            ),
-#            " ",
-#            "use_mock_hardware:=",
-#            use_mock_hardware,
+        [PathJoinSubstitution([FindExecutable(name="xacro")])," ",
+            PathJoinSubstitution([FindPackageShare("amiibot_description"), "urdf", "amiibot.urdf.xacro"]),
         ]
     )
     robot_description = {"robot_description": robot_description_content}
@@ -52,20 +27,18 @@ def generate_launch_description():
             "amiibot_controllers.yaml",
         ]
     )
-#    rviz_config_file = PathJoinSubstitution(
-#        [FindPackageShare("ros2_control_demo_description"), "diffbot/rviz", "diffbot.rviz"]
-#    )
 
     control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
         parameters=[
-            robot_description,
+            #robot_description,
             robot_controllers
         ],
         output="both",
         remappings=[
             ('/botwheel_explorer/cmd_vel_unstamped', '/cmd_vel'),
+            ('/controller_manager/robot_description', '/robot_description'),
         ]
     )
     robot_state_pub_node = Node(
@@ -74,14 +47,6 @@ def generate_launch_description():
         output="both",
         parameters=[robot_description],
     )
-#    rviz_node = Node(
-#        package="rviz2",
-#        executable="rviz2",
-#        name="rviz2",
-#        output="log",
-#        arguments=["-d", rviz_config_file],
-#        condition=IfCondition(gui),
-#    )
 
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
@@ -93,18 +58,8 @@ def generate_launch_description():
         package="controller_manager",
         executable="spawner",
         arguments=["botwheel_explorer", "--controller-manager", "/controller_manager"],
-        remappings=[
-            ('/botwheel_explorer/cmd_vel_unstamped', '/cmd_vel'),
-        ]
+        #remappings=[('/botwheel_explorer/cmd_vel_unstamped', '/cmd_vel'),]
     )
-
-#    # Delay rviz start after `joint_state_broadcaster`
-#    delay_rviz_after_joint_state_broadcaster_spawner = RegisterEventHandler(
-#        event_handler=OnProcessExit(
-#            target_action=joint_state_broadcaster_spawner,
-#            on_exit=[rviz_node],
-#        )
-#    )
 
     # Delay start of robot_controller after `joint_state_broadcaster`
     delay_robot_controller_spawner_after_joint_state_broadcaster_spawner = RegisterEventHandler(
