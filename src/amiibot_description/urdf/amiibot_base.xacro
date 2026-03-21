@@ -177,7 +177,7 @@
         <parent link="base_link"/>
         <child link="left_wheel"/>
         <origin xyz="0 0.1725 0.0455" rpy="0 0 0"/>
-        <axis xyz="0 1 0"/>
+        <axis xyz="0 -1 0"/>
         <dynamics damping="0.2"/>
     </joint>
     

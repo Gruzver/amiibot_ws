@@ -7,11 +7,11 @@ import os
 
 def generate_launch_description():
     robot_description_path = get_package_share_path('amiibot_description')
-    robot_bringup_path = get_package_share_path('amiibot_bringup')
-    
+    robot_controller_path = get_package_share_path('amiibot_controller')
+
     urdf_path = os.path.join(robot_description_path, 'urdf', 'amiibot.urdf.xacro')
     robot_description = ParameterValue(Command(['xacro ', urdf_path]), value_type=str)
-    robot_controllers = os.path.join(robot_bringup_path, 'config', 'amiibot_controllers.yaml')
+    robot_controllers = os.path.join(robot_controller_path, 'config', 'amiibot_controllers.yaml')
 
     robot_state_publisher_node = Node(
         package="robot_state_publisher",

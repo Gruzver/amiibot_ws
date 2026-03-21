@@ -28,45 +28,27 @@
 
 
 
-    <!-- ROS 2 Control -->
+    <!-- ROS 2 Control Plugin -->
     <gazebo>
-        <!-- ROS 2 Humble -->
-        <xacro:if value="$(arg is_ignition)">
-          <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
-              <parameters>$(find amiibot_controller)/config/amiibot_controllers.yaml</parameters>
-          </plugin>
-
-          <plugin filename="ignition-gazebo-imu-system" name="ignition::gazebo::systems::Imu">
-          </plugin>
-
-          <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
+        <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+            <parameters>$(find amiibot_controller)/config/amiibot_controllers.yaml</parameters>
+        </plugin>
+        
+        <!-- IMU and LiDAR Sensors System -->
+        <plugin filename="ignition-gazebo-imu-system" name="ignition::gazebo::systems::Imu">
+        </plugin>
+        
+        <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
             <render_engine>ogre2</render_engine>
-          </plugin>
-
-        </xacro:if>
-
-        <!-- ROS 2 Iron or above -->
-        <xacro:unless value="$(arg is_ignition)">
-          <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-              <parameters>$(find amiibot_controller)/config/amiibot_controllers.yaml</parameters>
-          </plugin>
-
-          <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu">
-          </plugin>
-
-          <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
-          <render_engine>ogre2</render_engine>
-          </plugin>
-        </xacro:unless>
-
+        </plugin>
     </gazebo>
 
   <!-- IMU -->
-  <gazebo reference="imu_link">
+  <gazebo reference="imu">
     <sensor name="imu" type="imu">
         <always_on>true</always_on>
         <update_rate>100</update_rate>
-        <gz_frame_id>imu_link</gz_frame_id>
+        <gz_frame_id>imu</gz_frame_id>
         <topic>imu</topic>
         <imu>
           <angular_velocity>
@@ -112,35 +94,33 @@
         </imu>
     </sensor>
   </gazebo>
-
-  <gazebo reference="laser_link">
-    <sensor name="lidar" type="gpu_ray">
-        <always_on>true</always_on>
-        <update_rate>5</update_rate>
-        <visualize>true</visualize>
-        <topic>scan</topic>
-        <gz_frame_id>laser_link</gz_frame_id>
-        <ray>
-            <scan>
-                <horizontal>
-                    <samples>360</samples>
-                    <resolution>1.0</resolution>
-                    <min_angle>-1.5708</min_angle>
-                    <max_angle>1.5708</max_angle>
-                </horizontal>
-            </scan>
-            <range>
-                <min>0.2</min>
-                <max>12.0</max>
-                <resolution>0.02</resolution>
-            </range>
-            <noise>
-                <type>gaussian</type>
-                <mean>0.0</mean>
-                <stddev>0.01</stddev>
-            </noise>
-        </ray>
-        
+  <gazebo reference="laser">
+    <sensor name="lidar" type="gpu_lidar">
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+      <topic>scan</topic>
+      <update_rate>5</update_rate>
+      <gz_frame_id>laser</gz_frame_id>
+      <lidar>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1.00000</resolution>
+            <min_angle>0.000000</min_angle>
+            <max_angle>6.280000</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.120000</min>
+          <max>12.0</max>
+          <resolution>0.02</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </lidar>
     </sensor>
   </gazebo>
 

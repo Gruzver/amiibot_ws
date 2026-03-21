@@ -22,7 +22,7 @@ def generate_launch_description():
 
     robot_controllers = PathJoinSubstitution(
         [
-            FindPackageShare("amiibot_description"),
+            FindPackageShare("amiibot_controller"),
             "config",
             "amiibot_controllers.yaml",
         ]
@@ -37,7 +37,6 @@ def generate_launch_description():
         ],
         output="both",
         remappings=[
-            ('/botwheel_explorer/cmd_vel_unstamped', '/cmd_vel'),
             ('/controller_manager/robot_description', '/robot_description'),
         ]
     )
@@ -57,7 +56,7 @@ def generate_launch_description():
     robot_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["botwheel_explorer", "--controller-manager", "/controller_manager"],
+        arguments=["amiibot_controller", "--controller-manager", "/controller_manager"],
         #remappings=[('/botwheel_explorer/cmd_vel_unstamped', '/cmd_vel'),]
     )
 
