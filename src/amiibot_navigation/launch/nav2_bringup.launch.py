@@ -10,24 +10,27 @@ def generate_launch_description():
 
     pkg_nav2_bringup = get_package_share_directory('nav2_bringup')
 
-    # Argument for sim_time (default: false for real hardware)
     use_sim_time_arg = DeclareLaunchArgument(
         name='use_sim_time',
         default_value='false',
         description='Use simulation time (true for Gazebo/sim, false for real robot)'
     )
 
-    # Rutas a tus archivos
+    map_arg = DeclareLaunchArgument(
+        name='map',
+        default_value=PathJoinSubstitution(
+            [FindPackageShare("amiibot_navigation"), "maps", "small_house_map.yaml"]
+        ),
+        description='Full path to map yaml file'
+    )
+
     params_file = PathJoinSubstitution(
         [FindPackageShare("amiibot_navigation"), "config", "nav2_params.yaml"]
     )
 
-    map_file = PathJoinSubstitution(
-        [FindPackageShare("amiibot_navigation"), "maps", "map_amii_space.yaml"]
-    )
-
     return LaunchDescription([
         use_sim_time_arg,
+        map_arg,
 
         # --- LOCALIZATION (AMCL + Map Server) ---
         # Esto publica el TF map -> odom
@@ -36,7 +39,7 @@ def generate_launch_description():
                 os.path.join(pkg_nav2_bringup, 'launch', 'localization_launch.py')
             ),
             launch_arguments={
-                'map': map_file,
+                'map': LaunchConfiguration('map'),
                 'use_sim_time': LaunchConfiguration('use_sim_time'),
                 'params_file': params_file,
                 'autostart': 'True',     # <--- CRÍTICO: Arranca el ciclo de vida automáticamente
