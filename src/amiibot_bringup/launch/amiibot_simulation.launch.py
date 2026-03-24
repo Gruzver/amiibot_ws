@@ -63,6 +63,29 @@ def generate_launch_description():
         parameters=[{"use_sim_time": True}],
     )
 
+    depth_to_scan = Node(
+        package='pointcloud_to_laserscan',
+        executable='pointcloud_to_laserscan_node',
+        name='pointcloud_to_laserscan',
+        parameters=[{
+            'target_frame': 'depth_camera',
+            'transform_tolerance': 0.01,
+            'min_height': -0.50,
+            'max_height': 0.5,
+            'angle_min': -0.7854,   # -45 deg
+            'angle_max': 0.7854,    # +45 deg
+            'angle_increment': 0.00872,  # 0.5 deg
+            'scan_time': 1.0 / 15.0,
+            'range_min': 0.3,
+            'range_max': 10.0,
+            'use_inf': True,
+        }],
+        remappings=[
+            ('cloud_in', '/depth_camera/points'),
+            ('scan', '/scan_depth'),
+        ]
+    )
+
     return LaunchDescription([
         world_name_arg,
         gazebo,
@@ -70,4 +93,5 @@ def generate_launch_description():
         joystick,
         rviz,
         TimerAction(period=6.0, actions=[ekf]),
+        TimerAction(period=6.0, actions=[depth_to_scan]),
     ])
