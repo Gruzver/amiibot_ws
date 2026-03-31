@@ -32,9 +32,7 @@ The long-term research goal is social navigation in dynamic human environments, 
 
 ## Hardware
 
-<table>
-<tr>
-<td>
+![amiibot real robot](docs/media/amiibot_real_compressed.gif)
 
 | Component         | Model                   | Interface      | ROS2 Topic                              |
 |-------------------|-------------------------|----------------|-----------------------------------------|
@@ -48,15 +46,6 @@ The long-term research goal is social navigation in dynamic human environments, 
 - Wheel radius: `0.0855 m` · Wheel separation: `0.345 m`
 - LiDAR mount: `xyz = [0.16, 0, 0.285]` relative to `base_link`
 - D435 mount: `xyz = [0.12, 0, 0.60]` relative to `base_link`, FOV 87°, range 0.3–10 m
-
-</td>
-<td>
-
-![amiibot real robot](docs/media/amiibot_real_compressed.gif)
-
-</td>
-</tr>
-</table>
 
 ---
 
