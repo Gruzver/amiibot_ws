@@ -33,8 +33,14 @@ def generate_launch_description():
     model_path = str(Path(amiibot_description_dir).parent.resolve())
     model_path += pathsep + os.path.join(amiibot_description_dir, 'models')
 
+    try:
+        bookstore_dir = get_package_share_directory('aws_robomaker_bookstore_world')
+        model_path += pathsep + os.path.join(bookstore_dir, 'models')
+    except Exception:
+        pass
+
     gazebo_resource_path = SetEnvironmentVariable(
-        "GZ_SIM_RESOURCE_PATH", 
+        "GZ_SIM_RESOURCE_PATH",
         model_path
     )
 
