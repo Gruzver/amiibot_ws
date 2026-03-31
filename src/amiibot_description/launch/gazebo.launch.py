@@ -1,6 +1,6 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
-from launch.actions import DeclareLaunchArgument, SetEnvironmentVariable, IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, SetEnvironmentVariable, IncludeLaunchDescription, TimerAction
 from pathlib import Path
 import os
 from os import pathsep
@@ -33,19 +33,23 @@ def generate_launch_description():
     model_path = str(Path(amiibot_description_dir).parent.resolve())
     model_path += pathsep + os.path.join(amiibot_description_dir, 'models')
 
+    try:
+        bookstore_dir = get_package_share_directory('aws_robomaker_bookstore_world')
+        model_path += pathsep + os.path.join(bookstore_dir, 'models')
+    except Exception:
+        pass
+
     gazebo_resource_path = SetEnvironmentVariable(
-        "GZ_SIM_RESOURCE_PATH", 
+        "GZ_SIM_RESOURCE_PATH",
         model_path
     )
 
-    ros_distro = os.environ
-    is_ignition = "True" if ros_distro == "humble" else "False"
+    ros_distro = os.environ["ROS_DISTRO"]
 
     amiibot_description = ParameterValue(Command([
         'xacro ',
         LaunchConfiguration('model'),
-        " is_ignition:=",
-        is_ignition,
+        " is_simulation:=true",
         ]),
         value_type=str
     )
@@ -54,9 +58,8 @@ def generate_launch_description():
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        parameters=[{
-            'robot_description': amiibot_description
-        }],
+        parameters=[{"robot_description": amiibot_description,
+                     "use_sim_time": True}]
     )
 
     gazebo = IncludeLaunchDescription(
@@ -82,10 +85,14 @@ def generate_launch_description():
         arguments=[
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
             "/imu@sensor_msgs/msg/Imu[gz.msgs.IMU",
-            "scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan",
+            "/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan",
+            "/depth_camera/image@sensor_msgs/msg/Image[gz.msgs.Image",
+            "/depth_camera/depth_image@sensor_msgs/msg/Image[gz.msgs.Image",
+            "/depth_camera/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
+            "/depth_camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
         ],
         remappings=[
-            ('/imu', '/imu/out'),
+            ('/imu', '/data'),
         ]
     )
 
@@ -95,6 +102,6 @@ def generate_launch_description():
         gazebo_resource_path,
         robot_state_publisher_node,
         gazebo,
-        gz_spawm_entity,
+        TimerAction(period=3.0, actions=[gz_spawm_entity]),
         gz_ros2_bridge
     ])

@@ -165,6 +165,19 @@
         </material>
       </visual>
     </link>
+
+    <link name="depth_camera">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.025 0.1 0.03"/>
+        </geometry>
+        <material name="gray">
+          <color rgba="0.3 0.3 0.3 1"/>
+        </material>
+      </visual>
+    </link>
+
     <!-- JOINTS -->
 
     <joint name="base_joint" type="fixed">
@@ -177,7 +190,7 @@
         <parent link="base_link"/>
         <child link="left_wheel"/>
         <origin xyz="0 0.1725 0.0455" rpy="0 0 0"/>
-        <axis xyz="0 1 0"/>
+        <axis xyz="0 -1 0"/>
         <dynamics damping="0.2"/>
     </joint>
     
@@ -206,7 +219,7 @@
     <joint name="imu_joint" type="fixed">
       <parent link="base_link"/>
       <child link="imu"/>
-      <origin xyz="0 0 0.28" rpy="0 0 0"/>
+      <origin xyz="0 0 0.10" rpy="0 0 0"/>
     </joint>
 
     <joint name="laser_joint" type="fixed">
@@ -220,4 +233,19 @@
       <child link="microphone"/>
       <origin xyz="0 0 1.2" rpy="0 0 0"/>
     </joint>
+
+    <joint name="depth_camera_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="depth_camera"/>
+      <origin xyz="0.12 0 0.6" rpy="0 0 0"/>
+    </joint>
+
+    <link name="depth_camera_optical_frame"/>
+
+    <joint name="depth_camera_optical_joint" type="fixed">
+      <parent link="depth_camera"/>
+      <child link="depth_camera_optical_frame"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
 </robot>
