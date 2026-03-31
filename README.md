@@ -52,7 +52,7 @@ The long-term research goal is social navigation in dynamic human environments, 
 </td>
 <td>
 
-![amiibot real robot](docs/media/amiibot_real.gif)
+![amiibot real robot](docs/media/amiibot_real_compressed.gif)
 
 </td>
 </tr>
@@ -73,7 +73,7 @@ The long-term research goal is social navigation in dynamic human environments, 
 
 ### Node Graph
 
-![ROS2 node graph](docs/media/rosgraph_amiibot.svg)
+![ROS2 node graph](docs/media/rosgraph_amiibot.png)
 
 ---
 
