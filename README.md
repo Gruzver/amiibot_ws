@@ -32,7 +32,9 @@ The long-term research goal is social navigation in dynamic human environments, 
 
 ## Hardware
 
-![amiibot real robot](docs/media/amiibot_real_compressed.gif)
+<p align="center">
+  <img src="docs/media/amiibot_real_compressed.gif" alt="amiibot real robot"/>
+</p>
 
 | Component         | Model                   | Interface      | ROS2 Topic                              |
 |-------------------|-------------------------|----------------|-----------------------------------------|
