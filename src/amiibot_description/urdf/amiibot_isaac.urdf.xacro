@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<!--
+  URDF for Isaac Sim 5.1.0
+  - Includes only robot geometry (amiibot_base.xacro)
+  - No Gazebo/Ignition plugins
+  - No ros2_control block (differential drive is configured via OmniGraph in Isaac Sim)
+
+  To export a resolved URDF (recommended before importing into Isaac Sim):
+    source install/setup.bash
+    xacro src/amiibot_description/urdf/amiibot_isaac.urdf.xacro > /tmp/amiibot_isaac.urdf
+-->
+
+<robot name="amiibot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find amiibot_description)/urdf/amiibot_base.xacro"/>
+
+</robot>
