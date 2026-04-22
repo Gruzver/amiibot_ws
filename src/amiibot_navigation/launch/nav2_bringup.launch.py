@@ -24,13 +24,20 @@ def generate_launch_description():
         description='Full path to map yaml file'
     )
 
-    params_file = PathJoinSubstitution(
-        [FindPackageShare("amiibot_navigation"), "config", "nav2_params.yaml"]
+    params_file_arg = DeclareLaunchArgument(
+        name='params_file',
+        default_value=PathJoinSubstitution(
+            [FindPackageShare("amiibot_navigation"), "config", "nav2_params.yaml"]
+        ),
+        description='Full path to nav2 params yaml file'
     )
+
+    params_file = LaunchConfiguration('params_file')
 
     return LaunchDescription([
         use_sim_time_arg,
         map_arg,
+        params_file_arg,
 
         # --- LOCALIZATION (AMCL + Map Server) ---
         # Esto publica el TF map -> odom

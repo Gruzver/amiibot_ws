@@ -26,7 +26,7 @@
       </material>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0.20"/>
       <geometry>
         <box size="0.45 0.35 0.28"/>
       </geometry>
@@ -179,7 +179,7 @@
     <parent link="base_link"/>
     <child link="left_wheel"/>
     <origin rpy="0 0 0" xyz="0 0.1725 0.0455"/>
-    <axis xyz="0 -1 0"/>
+    <axis xyz="0 1 0"/>
     <dynamics damping="0.2"/>
   </joint>
   <joint name="right_wheel_joint" type="continuous">

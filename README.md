@@ -13,9 +13,11 @@
 
 ## Overview
 
-**amiibot** is a 4-wheel differential-drive robot (2 actuated + 2 castor) built for research in autonomous navigation and human-robot interaction. The platform supports a full simulation workflow in **Ignition Gazebo** and deployment on real hardware (**ODrive + RPLidar + RealSense D435**).
+**amiibot** is a 4-wheel differential-drive robot (2 actuated + 2 castor) built for research in autonomous navigation and human-robot interaction. The platform supports simulation in **Ignition Gazebo** and **Isaac Sim**, and deployment on real hardware (**ODrive + RPLidar + RealSense D435**).
 
 The long-term research goal is social navigation in dynamic human environments, targeting a publication on human-aware robot motion planning.
+
+> **Isaac Sim integration in progress** — differential drive, sensor fusion (EKF), LiDAR, IMU, depth camera and full Nav2 stack running on Isaac Sim 5.1.0.
 
 ---
 

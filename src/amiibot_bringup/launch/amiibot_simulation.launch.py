@@ -56,7 +56,7 @@ def generate_launch_description():
         arguments=["-d", os.path.join(
                 get_package_share_directory("amiibot_description"),
                 "rviz",
-                "display.rviz"
+                "nav2.rviz"
             )
         ],
         output="screen",

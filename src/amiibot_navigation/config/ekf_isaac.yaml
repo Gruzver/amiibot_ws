@@ -1,0 +1,39 @@
+ekf_filter_node:
+  ros__parameters:
+    use_sim_time: true
+    frequency: 30.0
+
+    map_frame: map
+    odom_frame: odom
+    base_link_frame: base_footprint
+    world_frame: odom
+
+    odom0: /odom
+    odom0_config: [true, true, false,
+                   false, false, true,
+                   false, false, false,
+                   false, false, false,
+                   false, false, false]
+    odom0_differential: false
+    odom0_queue_size: 10
+
+    imu0: /data
+    imu0_config: [false, false, false,
+                  true, true, true,
+                  false, false, false,
+                  true, true, true,
+                  false, false, false]
+    imu0_differential: true
+    imu0_remove_gravitational_acceleration: true
+    imu0_queue_size: 10
+    imu0_frame: imu
+
+    use_control: false
+    two_d_mode: true
+    transform_time_offset: 0.0
+    transform_timeout: 0.05
+    publish_tf: true
+    print_diagnostics: true
+    debug: false
+    predict_to_current_time: true
+    publish_acceleration: false

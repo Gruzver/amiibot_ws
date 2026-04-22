@@ -94,6 +94,13 @@
         </imu>
     </sensor>
   </gazebo>
+  <!-- base_link usa visibility_flags=1 para ser invisible al LiDAR (gpu_lidar filtra por mask) -->
+  <gazebo reference="base_link">
+    <visual>
+      <visibility_flags>1</visibility_flags>
+    </visual>
+  </gazebo>
+
   <gazebo reference="laser">
     <sensor name="lidar" type="gpu_lidar">
       <always_on>true</always_on>
@@ -101,6 +108,7 @@
       <topic>scan</topic>
       <update_rate>5</update_rate>
       <gz_frame_id>laser</gz_frame_id>
+      <visibility_mask>4294967294</visibility_mask>
       <lidar>
         <scan>
           <horizontal>
